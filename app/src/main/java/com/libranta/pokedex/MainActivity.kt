@@ -330,8 +330,8 @@ fun CardFullScreen(
         val pokemonResponse = repository.getPokemonByName(pokemon.name)
         if (pokemonResponse != null) {
             pokemonName = pokemonResponse.name
-            pokemonHeight = pokemonResponse.name
-            pokemonWeight = pokemonResponse.height.toString()
+            pokemonHeight = pokemonResponse.height.toString()
+            pokemonWeight = pokemonResponse.weight.toString()
             pokemonorder = pokemonResponse.order.toString()
             pokemonBaseExp = pokemonResponse.base_experience.toString()
             isDefault = pokemonResponse.is_default
