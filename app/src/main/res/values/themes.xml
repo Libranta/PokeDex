@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PokeDex" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name = "SplashScreen" parent = "Theme.PokeDex">
+        <item name = "windowSplashScreenBackground">?android:colorPrimary</item>
+        <item name = "windowSplashScreenAnimatedIcon">@drawable/lottie_poke</item>
+        <item name = "windowSplashScreenAnimationDuration">800</item>
+    </style>
+
+</resources>
