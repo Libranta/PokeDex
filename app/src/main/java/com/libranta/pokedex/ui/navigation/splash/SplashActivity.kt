@@ -12,12 +12,12 @@ class SplashActivity : ComponentActivity(){
     override fun onCreate(savedInstance : Bundle?){
         super.onCreate(savedInstance)
 
-        // Mockup sound when app is opened
+        //Sound When Its opened
         //TODO: Implement MediaPlayer
 
         lifecycleScope.launchWhenCreated {
             //TODO: Stop MediaPlayer by Listener
-            //If conditions needed like checkers, implement here before startActivity
+            //If conditions with pending verification exist like triggers, implement here before startActivity
             startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()
         }

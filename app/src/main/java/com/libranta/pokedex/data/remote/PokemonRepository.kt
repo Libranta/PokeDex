@@ -1,12 +1,10 @@
 package com.libranta.pokedex.data.remote
 
-import android.util.Log
-import com.google.gson.GsonBuilder
+
 import com.libranta.pokedex.data.remote.catalog.Pokemon
 import com.libranta.pokedex.data.remote.catalog.PokemonMainData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -39,8 +37,6 @@ class PokemonRepository {
         }
     }
 
-
-
     private fun createApiService(): PokemonApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
@@ -49,8 +45,6 @@ class PokemonRepository {
 
         return retrofit.create(PokemonApiService::class.java)
     }
-
-
 
     companion object {
         suspend fun fetchPokemonList(repository: PokemonRepository, offset: Int, limit: Int): List<PokemonMainData> {

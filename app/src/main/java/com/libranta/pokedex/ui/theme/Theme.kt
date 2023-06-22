@@ -51,7 +51,7 @@ fun PokeDexTheme(
         }
 
         darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        else -> LightColorSchemew
     }
 
 /*
