@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PokeDex</string>
+
+<!--BottomBar Strings-->
+    <string name="tab_feed">Feed</string>
+    <string name="tab_settings">Settings</string>
 </resources>

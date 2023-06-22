@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -57,6 +58,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -81,6 +83,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.libranta.pokedex.data.local.classes.BottomBar
 import com.libranta.pokedex.data.remote.PokemonRepository
 import com.libranta.pokedex.data.remote.catalog.PokemonMainData
+import com.libranta.pokedex.data.shared.controllers.BackPressHandler
+import com.libranta.pokedex.ui.items.fixed.DataCard
 import com.libranta.pokedex.ui.navigation.screens.Screen
 import com.libranta.pokedex.ui.navigation.screens.feed.FeedScreen
 import com.libranta.pokedex.ui.navigation.screens.settings.SettingsScreen
@@ -152,6 +156,8 @@ fun HomeScreenSet(){
         BottomBar.Feed,
         BottomBar.Settings
     )
+    val sFeed = stringResource(id = BottomBar.Feed.title)
+    val sSettings = stringResource(id = BottomBar.Settings.title)
 
     //Behavior and Navigation
     val navController: NavHostController = rememberNavController()
@@ -198,7 +204,7 @@ fun HomeScreenSet(){
                         },
                         label = {
                             Text(
-                                text = screen.title,
+                                text = sFeed ,
                                 style = sLabelMedium,
                                 color = cOnSurfaceVariant,
                             )
@@ -206,7 +212,7 @@ fun HomeScreenSet(){
                         icon = {
                             Icon(
                                 imageVector = screen.icon,
-                                contentDescription = screen.title,
+                                contentDescription = sSettings,
                                 tint = cOnSurfaceVariant
                             )
                         },
@@ -312,7 +318,9 @@ fun CardFullScreen(
         )
     )
 
-
+    BackPressHandler {
+        onClose()
+    }
     LaunchedEffect(swipeableState.offset) {
         scope.launch {
             swipeableState.animateTo(
@@ -367,9 +375,19 @@ fun CardFullScreen(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                IconButton(
+                    onClick = onClose
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        contentDescription = "Close",
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
                 Box(modifier = Modifier
                     .fillMaxWidth()
-                    .size(400.dp)
+                    .size(350.dp)
                     .clip(shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp))){
                     LottieAnimation(
                         composition = backgroundLottie,
@@ -398,51 +416,44 @@ fun CardFullScreen(
                     )
 
                     }
-                Text(
-                    text = pokemon.name,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Card(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(200.dp, 50.dp),
+                        backgroundColor = MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = pokemon.name,
+                                style = MaterialTheme.typography.headlineMedium,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                        }
 
-                Text(
-                    text = "Height: $pokemonHeight",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                    }
 
-                Text(
-                    text = "Weight: $pokemonWeight",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                    DataCard(title = "Height", subtitle =pokemonHeight)
+                    DataCard(title = "Weight", subtitle =pokemonWeight)
+                    DataCard(title = "Order", subtitle =pokemonorder)
+                    DataCard(title = "Base Experience", subtitle =pokemonBaseExp)
+                    DataCard(title = "Is Default", subtitle =isDefault.toString())
 
-                Text(
-                    text = "Order: $pokemonorder",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-                Text(
-                    text = "Base Experience: $pokemonBaseExp",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-                Text(
-                    text = "Is Default: $isDefault",
-                    style = MaterialTheme.typography.labelMedium,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                }
             }
         }
 
-        IconButton(
-            onClick = onClose
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Close,
-                contentDescription = "Close",
-                tint = MaterialTheme.colorScheme.onSurface
-            )
-        }
     }
 }
 
